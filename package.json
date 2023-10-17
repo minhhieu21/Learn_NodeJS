@@ -1,0 +1,23 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Backend with Node Js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minhhieu21/Learn_NodeJS.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "minhhieu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minhhieu21/Learn_NodeJS/issues"
+  },
+  "homepage": "https://github.com/minhhieu21/Learn_NodeJS#readme"
+}
