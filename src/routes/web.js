@@ -1,15 +1,12 @@
 const express = require('express')
+const { getHomepage, getTest } = require('../controllers/homeController')
 const router = express.Router()
 
 
 //khai báo routes
 //req (request), res(response) là 2 object trong môi trường Node.js
-router.get('/', (req, res) => {
-    res.send('Hello World & nodemon')
-})
+//router.Method('/route',handler)
+router.get('/', getHomepage);
+router.get('/test', getTest);
 
-router.get('/test', (req, res) => {
-    res.render('index.ejs')
-})
-
-module.exports = router;
+module.exports = router; //export default
