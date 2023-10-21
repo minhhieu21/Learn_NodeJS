@@ -7,14 +7,15 @@ const connection = require('./config/database');
 // config dotenv
 require('dotenv').config()
 
-// simple query
-connection.query(
-    'SELECT * FROM Users u',
-    function(err, results, fields) {
-        console.log(">>>>result = ", results); // results contains rows returned by server
-        // console.log(">>>>fields = ", fields); // fields contains extra meta data about results, if available
-    }
-);
+// // simple query
+// connection.query(
+//     'SELECT * FROM Users u',
+//     function(err, results, fields) {
+//         console.log(">>>>result = ", results); // results contains rows returned by server
+//         // console.log(">>>>fields = ", fields); // fields contains extra meta data about results, if available
+//     }
+// );
+
 const port = process.env.PORT || 8081 // init port
 const hostname = process.env.HOST_NAME // init port
 
