@@ -24,8 +24,13 @@ const getHomepage = (req, res) => {
 const getTest = (req, res) => {
     res.render('index.ejs')
 }
+const postCreateUser = (req, res) => {
+    console.log('>>> req.body', req.body)
+    res.send('Create new User')
+}
 
 module.exports = {
     getHomepage,
-    getTest
+    getTest,
+    postCreateUser
 }

@@ -11,33 +11,33 @@
 <body>
     <header>
         <div class="topnav">
-            <a class="active" href="#home">Home</a>
-            <a href="#news">News</a>
-            <a href="#contact">Contact</a>
-            <a href="#about">About</a>
+            <a class="active" href="">Home</a>
+            <a href="#">News</a>
+            <a href="#">Contact</a>
+            <a href="#">About</a>
         </div>
     </header>
     <section>
         <h3 class="text-center mt-3 mb-3">ADD NEW USER</h3>
         <div class="d-flex justify-content-center align-items-center container border border-dark">
             <div class="row ">
-                <form action="">
+                <form action="/create-user" method="post">
                     <div class="form-group mt-2">
                         <label for="inputEmail" class="control-label">Enter your email :</label>
-                        <input type="email" class="form-control">
+                        <input name="email" type="email" class="form-control">
                     </div>
                     <div class="form-group mt-2">
                         <label for="inputName" class="control-label">Enter your fullname :</label>
-                        <input type="text" class="form-control">
+                        <input name="fullname" type="text" class="form-control">
                     </div>
                     <div class="row form-group mt-2">
                         <div class="col ">
-                            <label for="inputAddress" class="control-label">Enter your address :</label>
-                            <input type="text" class="form-control" placeholder="Address">
+                            <label for="inputAddress" class="control-label">Enter your City :</label>
+                            <input name="city" type="text" class="form-control" placeholder="City">
                         </div>
                         <div class="col">
                             <label for="inputAge" class="control-label">Enter your age :</label>
-                            <input type="number" class="form-control" placeholder="Age">
+                            <input name="age" type="number" class="form-control" placeholder="Age">
                         </div>
                     </div>
                     <div class="form-group mt-2">
