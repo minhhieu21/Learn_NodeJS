@@ -1,3 +1,4 @@
+const { name } = require('ejs');
 const connection = require('../config/database');
 
 const getHomepage = (req, res) => {
@@ -25,8 +26,21 @@ const getTest = (req, res) => {
     res.render('index.ejs')
 }
 const postCreateUser = (req, res) => {
-    console.log('>>> req.body', req.body)
-    res.send('Create new User')
+    let email = req.body.email;
+    let name = req.body.fullname;
+    let city = req.body.city;
+    let age = req.body.age;
+    let queryCreate = `INSERT INTO Users (email, name, city, age) VALUES (?,?,?,?)`
+
+    console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age)
+    connection.query(queryCreate, [email, name, city, age], function(err, result) {
+        if (err) {
+            throw err;
+        } else {
+            console.log('Insert user success !')
+        }
+    });
+    res.send('Insert User Success !')
 }
 
 module.exports = {
