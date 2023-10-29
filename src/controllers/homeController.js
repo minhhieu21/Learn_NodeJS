@@ -1,25 +1,11 @@
 const { name } = require('ejs');
 const connection = require('../config/database');
+const { getAllUsers } = require('../services/CRUDService.js')
 
-const getHomepage = (req, res) => {
+const getHomepage = async(req, res) => {
     // //process data
-    // //call model
-    // let users = [];
-
-    // connection.query(
-    //     'SELECT * FROM Users u',
-    //     function(err, results, fields) {
-    //         users = results;
-    //         console.log(">>>>result home page = ", results); // results contains rows returned by server
-    //         // console.log(">>>>fields = ", fields); // fields contains extra meta data about results, if available
-
-
-    //         // console.log(">>>>check users = ", users); 
-    //         res.send(JSON.stringify(users))
-    //     }
-    // );
-
-    return res.render('home.ejs')
+    let results = await getAllUsers();
+    return res.render('home.ejs', { listUsers: results })
 
 }
 const getTest = async(req, res) => {
@@ -40,7 +26,7 @@ const postCreateUser = async(req, res) => {
 
     console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age);
 
-    // user async, await
+    // use async, await
     const [results, fields, err] = await connection.query(queryCreate, [email, name, city, age]);
     if (err) {
         throw err;
@@ -51,6 +37,7 @@ const postCreateUser = async(req, res) => {
     console.log('>>> Check results', results)
     res.send('Insert User Success !')
 
+    // not user asyc await
     // connection.query(queryCreate, [email, name, city, age], function(err, result) {
     //     if (err) {
     //         throw err;
