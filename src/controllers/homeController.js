@@ -1,4 +1,4 @@
-const { name } = require('ejs');
+const ejs = require('ejs');
 const connection = require('../config/database');
 const { getAllUsers } = require('../services/CRUDService.js')
 
@@ -16,6 +16,17 @@ const getTest = async(req, res) => {
 
 const getCreatePage = (req, res) => {
     res.render('createUser.ejs')
+}
+const getUpdatePage = async(req, res) => {
+    const userId = req.params.id;
+    console.log('User Id:', userId);
+
+    let [results, fields] = await connection.query('Select * from Users u where id = ?', [userId]);
+    console.log('User:', results);
+
+    let user = results && results.length > 0 ? results[0] : {};
+
+    res.render('editUser.ejs', { userEdit: user })
 }
 const postCreateUser = async(req, res) => {
     let email = req.body.email;
@@ -52,4 +63,5 @@ module.exports = {
     getTest,
     postCreateUser,
     getCreatePage,
+    getUpdatePage
 }
