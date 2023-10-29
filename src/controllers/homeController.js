@@ -22,29 +22,47 @@ const getHomepage = (req, res) => {
     return res.render('home.ejs')
 
 }
-const getTest = (req, res) => {
-    res.render('index.ejs')
+const getTest = async(req, res) => {
+    // res.render('index.ejs')
+    const [results, fields] = await connection.query('Select * from Users u')
+    res.send(results)
 }
-const postCreateUser = (req, res) => {
+
+const getCreatePage = (req, res) => {
+    res.render('createUser.ejs')
+}
+const postCreateUser = async(req, res) => {
     let email = req.body.email;
     let name = req.body.fullname;
     let city = req.body.city;
     let age = req.body.age;
     let queryCreate = `INSERT INTO Users (email, name, city, age) VALUES (?,?,?,?)`
 
-    console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age)
-    connection.query(queryCreate, [email, name, city, age], function(err, result) {
-        if (err) {
-            throw err;
-        } else {
-            console.log('Insert user success !')
-        }
-    });
+    console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age);
+
+    // user async, await
+    const [results, fields, err] = await connection.query(queryCreate, [email, name, city, age]);
+    if (err) {
+        throw err;
+    } else {
+        console.log('Insert user success !')
+    }
+
+    console.log('>>> Check results', results)
     res.send('Insert User Success !')
+
+    // connection.query(queryCreate, [email, name, city, age], function(err, result) {
+    //     if (err) {
+    //         throw err;
+    //     } else {
+    //         console.log('Insert user success !')
+    //     }
+    // });
 }
 
 module.exports = {
     getHomepage,
     getTest,
-    postCreateUser
+    postCreateUser,
+    getCreatePage,
 }
