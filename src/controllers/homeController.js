@@ -1,6 +1,6 @@
 const ejs = require('ejs');
 const connection = require('../config/database');
-const { getAllUsers } = require('../services/CRUDService.js')
+const { getAllUsers, getUserById, updateUserById, createUser } = require('../services/CRUDService.js')
 
 const getHomepage = async(req, res) => {
     // //process data
@@ -21,32 +21,20 @@ const getUpdatePage = async(req, res) => {
     const userId = req.params.id;
     console.log('User Id:', userId);
 
-    let [results, fields] = await connection.query('Select * from Users u where id = ?', [userId]);
-    console.log('User:', results);
+    let user = await getUserById(userId);
 
-    let user = results && results.length > 0 ? results[0] : {};
-
-    res.render('editUser.ejs', { userEdit: user })
+    res.render('editUser.ejs', { userEdit: user }) // x <- y
 }
 const postCreateUser = async(req, res) => {
     let email = req.body.email;
     let name = req.body.fullname;
     let city = req.body.city;
     let age = req.body.age;
-    let queryCreate = `INSERT INTO Users (email, name, city, age) VALUES (?,?,?,?)`
-
     console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age);
 
-    // use async, await
-    const [results, fields, err] = await connection.query(queryCreate, [email, name, city, age]);
-    if (err) {
-        throw err;
-    } else {
-        console.log('Insert user success !')
-    }
+    await createUser(email, name, city, age);
 
-    console.log('>>> Check results', results)
-    res.send('Insert User Success !')
+    res.redirect('/')
 
     // not user asyc await
     // connection.query(queryCreate, [email, name, city, age], function(err, result) {
@@ -58,10 +46,27 @@ const postCreateUser = async(req, res) => {
     // });
 }
 
+const postUpdateUser = async(req, res) => {
+    let email = req.body.email;
+    let name = req.body.fullname;
+    let city = req.body.city;
+    let age = req.body.age;
+    let userId = req.body.userId;
+
+    console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age, 'userId : ', userId);
+
+    await updateUserById(email, name, city, age, userId);
+
+    // console.log('>>> Check results', results)
+    res.redirect('/')
+
+}
+
 module.exports = {
     getHomepage,
     getTest,
-    postCreateUser,
     getCreatePage,
-    getUpdatePage
+    getUpdatePage,
+    postCreateUser,
+    postUpdateUser,
 }

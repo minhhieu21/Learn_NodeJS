@@ -20,7 +20,11 @@
         <!-- <%= JSON.stringify(userEdit) %> -->
         <div class="d-flex justify-content-center align-items-center container border border-dark">
             <div class="row ">
-                <form action="/create-user" method="post">
+                <form action="/update-user" method="post">
+                    <div class="form-group mt-2 d-none">
+                        <label for="inputId" class="control-label">Id</label>
+                        <input value="<%=userEdit.id  %>" name="userId" type="text" class="form-control">
+                    </div>
                     <div class="form-group mt-2">
                         <label for="inputEmail" class="control-label">Enter your email :</label>
                         <input value="<%=userEdit.email  %>" name="email" type="email" class="form-control">
