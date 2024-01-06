@@ -29,11 +29,18 @@ configViewEngine(app);
 // khai báo routes
 app.use('/', webRoutes);
 
-//test connection
-connection();
 
-//run server trên port đã khởi tạo trước đấy
-//nạp các thông tin khai báo ở trên rồi chạy (ví dụ như nạp routes)
-app.listen(port, hostname, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+
+(async() => {
+    //test connection
+    try {
+        await connection();
+        //run server trên port đã khởi tạo trước đấy
+        //nạp các thông tin khai báo ở trên rồi chạy (ví dụ như nạp routes)
+        app.listen(port, hostname, () => {
+            console.log(`Learn NodeJS app listening on port ${port}`)
+        })
+    } catch (error) {
+        console.log(">>>Error connect to DB: ", error);
+    }
+})()
