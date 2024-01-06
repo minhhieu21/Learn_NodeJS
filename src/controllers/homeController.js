@@ -2,9 +2,13 @@ const ejs = require('ejs');
 const connection = require('../config/database');
 const { getAllUsers, getUserById, updateUserById, createUser, deleteUserById } = require('../services/CRUDService.js')
 
+const User = require('../models/user.js');
+
+
+
 const getHomepage = async(req, res) => {
     // //process data
-    let results = await getAllUsers();
+    let results = [];
     return res.render('home.ejs', { listUsers: results })
 
 }
@@ -32,18 +36,15 @@ const postCreateUser = async(req, res) => {
     let age = req.body.age;
     console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age);
 
-    await createUser(email, name, city, age);
+    await User.create({
+        email,
+        name,
+        city,
+        age
+    });
 
-    res.redirect('/')
+    res.send('Create user success !')
 
-    // not user asyc await
-    // connection.query(queryCreate, [email, name, city, age], function(err, result) {
-    //     if (err) {
-    //         throw err;
-    //     } else {
-    //         console.log('Insert user success !')
-    //     }
-    // });
 }
 const getDeleteUserPage = async(req, res) => {
     const userId = req.params.id;

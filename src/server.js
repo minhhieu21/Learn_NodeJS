@@ -3,6 +3,8 @@ const app = express() // tạo express application
 const configViewEngine = require('./config/viewEngine');
 const webRoutes = require('./routes/web');
 const connection = require('./config/database');
+const mongoose = require('mongoose'); //import mongoose
+const User = require('./models/user');
 
 // config req.body
 app.use(express.json()) // for json
@@ -28,7 +30,6 @@ configViewEngine(app);
 
 // khai báo routes
 app.use('/', webRoutes);
-
 
 
 (async() => {
