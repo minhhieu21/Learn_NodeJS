@@ -41,15 +41,14 @@ const postCreateUser = async(req, res) => {
         age
     });
 
-    res.send('Create user success !')
-
+    res.redirect('/')
 }
 const getDeleteUserPage = async(req, res) => {
     const userId = req.params.id;
     console.log('User Id:', userId);
 
-    let user = await getUserById(userId);
-    res.render("deleteUser.ejs", { userEdit: user })
+    let user = await User.findById(userId).exec();
+    res.render('deleteUser.ejs', { userEdit: user }) // x <- y
 }
 
 const postUpdateUser = async(req, res) => {
@@ -70,7 +69,11 @@ const postUpdateUser = async(req, res) => {
 
 const postDeleteUser = async(req, res) => {
     const id = req.body.userId;
-    await deleteUserById(id);
+    let result = await User.deleteOne({
+        _id: id
+    })
+
+    console.log(">>> result", result);
     res.redirect('/')
 }
 
