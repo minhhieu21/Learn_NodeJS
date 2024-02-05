@@ -33,7 +33,27 @@ const postCreateUserAPI = async(req, res) => {
     })
 }
 
+//Cập nhật user 
+const putUpdateUserAPI = async(req, res) => {
+    let email = req.body.email;
+    let name = req.body.fullname;
+    let city = req.body.city;
+    let age = req.body.age;
+    let userId = req.body.userId;
+
+    console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age, 'userId : ', userId);
+
+    let user = await User.updateOne({ _id: userId }, { name: name, email: email, city: city, age: age });
+
+    return res.status(200).json({
+        errorCode: 0,
+        data: user
+    })
+
+}
+
 module.exports = {
     getAllUsersAPI,
-    postCreateUserAPI
+    postCreateUserAPI,
+    putUpdateUserAPI
 }
