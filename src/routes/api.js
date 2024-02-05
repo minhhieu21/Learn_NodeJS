@@ -1,6 +1,6 @@
 const express = require('express')
 const routerAPI = express.Router()
-const { getAllUsersAPI, postCreateUserAPI, putUpdateUserAPI } = require('../controllers/apiController')
+const { getAllUsersAPI, postCreateUserAPI, putUpdateUserAPI, deleteUserAPI } = require('../controllers/apiController')
 
 //khai báo routes
 //req (request), res(response) là 2 object trong môi trường Node.js
@@ -9,5 +9,6 @@ const { getAllUsersAPI, postCreateUserAPI, putUpdateUserAPI } = require('../cont
 routerAPI.get('/users', getAllUsersAPI);
 routerAPI.post('/users', postCreateUserAPI);
 routerAPI.put('/users', putUpdateUserAPI);
+routerAPI.delete('/users', deleteUserAPI);
 
 module.exports = routerAPI; //export default
