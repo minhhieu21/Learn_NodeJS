@@ -1,73 +1,98 @@
-const User = require('../models/user.js');
+const User = require("../models/user");
+const { uploadSingleFile, uploadMultipleFiles } = require("../services/fileService");
 
-//Lấy danh sách user
 const getAllUsersAPI = async(req, res) => {
-    // //process data
     let results = await User.find({});
 
     return res.status(200).json({
-        errorCode: 0,
+        EC: 0,
         data: results
     })
 }
 
-
-//Tạo mới user
 const postCreateUserAPI = async(req, res) => {
     let email = req.body.email;
-    let name = req.body.fullname;
+    let name = req.body.myname;
     let city = req.body.city;
-    let age = req.body.age;
-    console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age);
-
     let user = await User.create({
-        email,
-        name,
-        city,
-        age
-    });
+        email: email,
+        name: name,
+        city: city
+    })
 
     return res.status(200).json({
-        errorCode: 0,
+        EC: 0,
         data: user
     })
 }
 
-//Cập nhật user 
 const putUpdateUserAPI = async(req, res) => {
     let email = req.body.email;
-    let name = req.body.fullname;
+    let name = req.body.myname;
     let city = req.body.city;
-    let age = req.body.age;
     let userId = req.body.userId;
 
-    console.log('>>> email :', email, ',fullname :', name, ',city :', city, ',age : ', age, 'userId : ', userId);
-
-    let user = await User.updateOne({ _id: userId }, { name: name, email: email, city: city, age: age });
+    let user = await User.updateOne({ _id: userId }, { email: email, name: name, city: city });
 
     return res.status(200).json({
-        errorCode: 0,
+        EC: 0,
         data: user
     })
-
 }
 
-//Xóa user
 const deleteUserAPI = async(req, res) => {
     const id = req.body.userId;
+
     let result = await User.deleteOne({
         _id: id
     })
 
     return res.status(200).json({
-        errorCode: 0,
+        EC: 0,
         data: result
     })
+}
+
+const postUploadSingleFileAPI = async(req, res) => {
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    let result = await uploadSingleFile(req.files.image);
+
+    return res.status(200).json({
+        EC: 0,
+        data: result
+    })
+}
+
+const postUploadMultipleFilesAPI = async(req, res) => {
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+    // console.log(req.files);
+    //upload single => files is an object
+    //upload multiple => files is an array
+    if (Array.isArray(req.files.image)) {
+        //upload multiple
+        let result = await uploadMultipleFiles(req.files.image);
+        return res.status(200).json({
+            EC: 0,
+            data: result
+        })
+
+    } else {
+        //upload single
+        return await postUploadSingleFileApi(req, res);
+    }
 }
 
 module.exports = {
     getAllUsersAPI,
     postCreateUserAPI,
     putUpdateUserAPI,
-    deleteUserAPI
+    deleteUserAPI,
+    postUploadSingleFileAPI,
+    postUploadMultipleFilesAPI
 }

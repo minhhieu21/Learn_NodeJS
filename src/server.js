@@ -3,9 +3,13 @@ const app = express() // tạo express application
 const configViewEngine = require('./config/viewEngine');
 const webRoutes = require('./routes/web');
 const apiRoutes = require('./routes/api');
+const fileUploads = require('express-fileupload');
 const connection = require('./config/database');
 const mongoose = require('mongoose'); //import mongoose
 const User = require('./models/user');
+
+//config fileUpload
+app.use(fileUploads());
 
 // config req.body
 app.use(express.json()) // for json
