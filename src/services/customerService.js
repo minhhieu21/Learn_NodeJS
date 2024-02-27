@@ -29,7 +29,29 @@ const createArrayCustomerService = async(arr) => {
     }
 }
 
+const getAllCustomerService = async() => {
+    try {
+        let results = await Customer.find({});
+        return results;
+    } catch (error) {
+        console.log("error >>", error)
+        return null;
+    }
+}
+
+const putUpdateCustomerService = async(id, name, email, phone, address) => {
+    try {
+        let result = await Customer.updateOne({ _id: id }, { name, email, address, phone });
+        return result;
+    } catch (error) {
+        console.log("error>>>", error)
+        return null;
+    }
+}
+
 module.exports = {
     createCustomerService,
-    createArrayCustomerService
+    createArrayCustomerService,
+    getAllCustomerService,
+    putUpdateCustomerService
 }
