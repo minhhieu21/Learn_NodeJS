@@ -1,7 +1,7 @@
 const express = require('express')
 const routerAPI = express.Router()
 const { getAllUsersAPI, postCreateUserAPI, putUpdateUserAPI, deleteUserAPI, postUploadSingleFileAPI, postUploadMultipleFilesAPI } = require('../controllers/apiController')
-const { postCreateCustomerAPI, postCreateArrayCustomerAPI, getAllCustomerAPI, putUpdateCustomerAPI } = require('../controllers/customerController')
+const { postCreateCustomerAPI, postCreateArrayCustomerAPI, getAllCustomerAPI, putUpdateCustomerAPI, deleteCustomerAPI } = require('../controllers/customerController')
     //khai báo routes
     //req (request), res(response) là 2 object trong môi trường Node.js
     //router.Method('/route',handler)
@@ -18,6 +18,8 @@ routerAPI.post('/customers', postCreateCustomerAPI);
 routerAPI.post('/customers-many', postCreateArrayCustomerAPI);
 routerAPI.get('/customers', getAllCustomerAPI);
 routerAPI.put('/customers', putUpdateCustomerAPI);
+routerAPI.delete('/customers', deleteCustomerAPI);
+
 
 //File
 routerAPI.post('/file', postUploadSingleFileAPI);
